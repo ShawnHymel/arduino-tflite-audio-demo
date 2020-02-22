@@ -16,17 +16,21 @@
 
 int main(void) 
 {
+    int slice = 30;
     int nfft = 256;
     kiss_fftr_cfg  kiss_fftr_state;
     kiss_fft_scalar rin[nfft+2];
     kiss_fft_cpx sout[nfft];
 
+    int start_idx = slice * nfft;
+
     // Print first set of raw samples
     printf("First %i samples\r\n", nfft);
     for (int i = 0; i < nfft; i++) 
     {
-        printf("%i", waveform[i]);
-        if (i < nfft - 1) {
+        printf("%i", waveform[start_idx + i]);
+        if (i < nfft - 1) 
+        {
             printf(", ");
         }
     }
@@ -36,8 +40,9 @@ int main(void)
     kiss_fftr_state = kiss_fftr_alloc(nfft,0,0,0);
 
     // Fill input buffer with Hanning windowed raw values
-    for (int i = 0; i < nfft; i++) {
-        rin[i] = (float)waveform[i] * 
+    for (int i = 0; i < nfft; i++)
+    {
+        rin[i] = (float)waveform[start_idx + i] * 
                     0.5 * (1 - cos(2 * M_PI * i / (nfft - 1)));
     }
 
@@ -46,9 +51,11 @@ int main(void)
 
     // Print FFT Real results
     printf("FFT Real\r\n");
-    for (int i = 0; i < (nfft / 2) + 1; i++) {
+    for (int i = 0; i < (nfft / 2) + 1; i++) 
+    {
         printf("%f", fabs((float)sout[i].r));
-        if (i < (nfft / 2)) {
+        if (i < (nfft / 2)) 
+        {
             printf(", ");
         }
     }
