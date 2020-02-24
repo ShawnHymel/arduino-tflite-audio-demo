@@ -25,6 +25,18 @@ int main(void)
     int start_idx = slice * nfft;
 
     // Print first set of raw samples
+    printf("Empty buffer:\r\n");
+    for (int i = 0; i < nfft; i++) 
+    {
+        printf("%i", sout[i]);
+        if (i < nfft - 1) 
+        {
+            printf(", ");
+        }
+    }
+    printf("\r\n");
+
+    // Print first set of raw samples
     printf("First %i samples\r\n", nfft);
     for (int i = 0; i < nfft; i++) 
     {
@@ -42,7 +54,7 @@ int main(void)
     // Fill input buffer with Hanning windowed raw values
     for (int i = 0; i < nfft; i++)
     {
-        rin[i] = (float)waveform[start_idx + i] * 
+        rin[i] = waveform[start_idx + i] * 
                     0.5 * (1 - cos(2 * M_PI * i / (nfft - 1)));
     }
 
@@ -53,7 +65,7 @@ int main(void)
     printf("FFT Real\r\n");
     for (int i = 0; i < (nfft / 2) + 1; i++) 
     {
-        printf("%f", fabs((float)sout[i].r));
+        printf("%i", abs(sout[i].r));
         if (i < (nfft / 2)) 
         {
             printf(", ");

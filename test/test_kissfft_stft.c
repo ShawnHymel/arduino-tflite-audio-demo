@@ -34,7 +34,7 @@ int main(void)
         // Fill input buffer with Hanning-windowed raw values
         for (int i = 0; i < nfft; i++)
         {
-            rin[i] = (float)waveform[(slice + hop) + i] * 
+            rin[i] = (float)waveform[(slice * hop) + i] * 
                         0.5 * (1 - cos(2 * M_PI * i / (nfft - 1)));
         }
 
