@@ -19,12 +19,15 @@ SRCFILES = 	./ext/kissfft/kiss_fft.c \
 			./ext/kissfft//tools/kiss_fftr.c
 
 .PHONY: all
-all: test_kissfft_real
+all: test_kissfft_stft
 
 hello: hello
 	$(CC) -o bin/hello test/hello.c
 
 test_kissfft_real: test/test_kissfft_real.c $(SRCFILES)
+	$(CC) -o bin/$@ $(CFLAGS) $(TYPEFLAGS) $+ -lm
+
+test_kissfft_stft: test/test_kissfft_stft.c $(SRCFILES)
 	$(CC) -o bin/$@ $(CFLAGS) $(TYPEFLAGS) $+ -lm
 
 .PHONY: clean
